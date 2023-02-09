@@ -4,9 +4,6 @@ import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import { Box, Button, Link, TextField, Typography } from "@mui/material";
 import EnterAddress from "./enterAddress";
-import { atom } from "recoil";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function MainMenu() {
   return (
@@ -21,8 +18,9 @@ export default function MainMenu() {
         <Box
           sx={{
             display: "flex",
-            flexDirection: ["column", , "column", "row"],
+            flexDirection: ["column", , "row", "row"],
             padding: "1rem",
+            alignItems: ["center", "", ""],
           }}
         >
           <Box
@@ -57,7 +55,6 @@ export default function MainMenu() {
             sx={{
               display: "flex",
               flexDirection: "column",
-              marginTop: "1rem",
               gap: "0.8rem",
             }}
           >

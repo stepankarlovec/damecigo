@@ -2,9 +2,10 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import Navbar from "./components/navbar";
 import MainMenu from "./components/mainMenu";
+import Footer from "./components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,15 +29,18 @@ export default function Home() {
           backgroundSize: "110%",
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            width: "100%",
-          }}
-        >
-          <MainMenu></MainMenu>
-        </Box>
+        <Container maxWidth="sm">
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <MainMenu></MainMenu>
+          </Box>
+        </Container>
+        <Footer></Footer>
       </Box>
     </>
   );

@@ -11,6 +11,13 @@ const lightThemeOptions: ThemeOptions = {
     mode: "light",
   },
   components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "white",
+        },
+      },
+    },
     MuiLink: {
       defaultProps: {
         component: LinkBehaviour,

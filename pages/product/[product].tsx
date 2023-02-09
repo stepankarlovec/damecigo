@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
+import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Navbar from "../components/navbar";
 import ProductPageComponent from "../components/productPageComponent";
 
-export const Product = () => {
+const Product: NextPage = () => {
   const { query } = useRouter();
 
   return (
