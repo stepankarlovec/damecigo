@@ -3,6 +3,7 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 
 import createEmotionCache from "../utility/createEmotionCache";
+import { getApolloClient } from "@/utility/apollo-client";
 
 export default class MyDocument extends Document {
   render() {
@@ -26,6 +27,8 @@ export default class MyDocument extends Document {
 // `getInitialProps` belongs to `_document` (instead of `_app`),
 // it's compatible with static-site generation (SSG).
 MyDocument.getInitialProps = async (ctx) => {
+  const apolloClient = getApolloClient({ forceNew: true });
+  const apolloState = apolloClient.extract();
   // Resolution order
   //
   // On the server:

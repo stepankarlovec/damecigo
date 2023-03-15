@@ -37,7 +37,7 @@ export const Navbar: FC = () => {
               ></Image>
             </MuiLink>
           </Box>
-          <Hidden smUp>
+          <Hidden mdUp>
             <IconButton>
               <MenuIcon />
             </IconButton>
