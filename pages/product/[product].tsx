@@ -4,6 +4,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Navbar from "../components/navbar";
 import ProductPageComponent from "../components/productPageComponent";
+import { useQuery, gql } from "@apollo/client";
 
 const Product: NextPage = () => {
   const { query } = useRouter();

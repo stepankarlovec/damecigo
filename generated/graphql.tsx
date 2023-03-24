@@ -15,79 +15,65 @@ export type Scalars = {
   Float: number;
 };
 
-export type GithubUser = {
-  __typename?: 'GithubUser';
-  avatarUrl: Scalars['String'];
-  id: Scalars['ID'];
-  login: Scalars['String'];
-};
-
-export type Kraba = {
-  __typename?: 'Kraba';
-  id: Scalars['ID'];
-  pocetKusu: Scalars['Int'];
-  sila?: Maybe<Scalars['Int']>;
+export type Product = {
+  __typename?: 'Product';
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  image?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  price?: Maybe<Scalars['Int']>;
+  vars?: Maybe<Scalars['String']>;
+  vat?: Maybe<Scalars['Int']>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  githubUsers: Array<GithubUser>;
-  kraba?: Maybe<Array<Kraba>>;
-  users: Array<User>;
+  product?: Maybe<Array<Maybe<Product>>>;
 };
 
-export type User = {
-  __typename?: 'User';
-  name?: Maybe<Scalars['String']>;
-};
-
-export type PeopleQueryVariables = Exact<{ [key: string]: never; }>;
+export type ProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PeopleQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', name?: string | null }>, githubUsers: Array<{ __typename?: 'GithubUser', id: string, login: string, avatarUrl: string }>, kraba?: Array<{ __typename?: 'Kraba', id: string, pocetKusu: number, sila?: number | null }> | null };
+export type ProductsQuery = { __typename?: 'Query', product?: Array<{ __typename?: 'Product', id?: string | null, name?: string | null, description?: string | null, price?: number | null, vat?: number | null, vars?: string | null, image?: string | null } | null> | null };
 
 
-export const PeopleDocument = gql`
-    query people {
-  users {
+export const ProductsDocument = gql`
+    query Products {
+  product {
+    id
     name
-  }
-  githubUsers {
-    id
-    login
-    avatarUrl
-  }
-  kraba {
-    id
-    pocetKusu
-    sila
+    description
+    price
+    vat
+    vars
+    image
   }
 }
     `;
 
 /**
- * __usePeopleQuery__
+ * __useProductsQuery__
  *
- * To run a query within a React component, call `usePeopleQuery` and pass it any options that fit your needs.
- * When your component renders, `usePeopleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = usePeopleQuery({
+ * const { data, loading, error } = useProductsQuery({
  *   variables: {
  *   },
  * });
  */
-export function usePeopleQuery(baseOptions?: Apollo.QueryHookOptions<PeopleQuery, PeopleQueryVariables>) {
+export function useProductsQuery(baseOptions?: Apollo.QueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<PeopleQuery, PeopleQueryVariables>(PeopleDocument, options);
+        return Apollo.useQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
       }
-export function usePeopleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PeopleQuery, PeopleQueryVariables>) {
+export function useProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProductsQuery, ProductsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<PeopleQuery, PeopleQueryVariables>(PeopleDocument, options);
+          return Apollo.useLazyQuery<ProductsQuery, ProductsQueryVariables>(ProductsDocument, options);
         }
-export type PeopleQueryHookResult = ReturnType<typeof usePeopleQuery>;
-export type PeopleLazyQueryHookResult = ReturnType<typeof usePeopleLazyQuery>;
-export type PeopleQueryResult = Apollo.QueryResult<PeopleQuery, PeopleQueryVariables>;
+export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
+export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
+export type ProductsQueryResult = Apollo.QueryResult<ProductsQuery, ProductsQueryVariables>;

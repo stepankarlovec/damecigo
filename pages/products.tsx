@@ -1,23 +1,29 @@
-import { Box } from "@mui/material";
+import { useProductsQuery } from "@/generated/graphql";
+import { Alert, Box } from "@mui/material";
 import Head from "next/head";
 import Navbar from "./components/navbar";
 import ProductComponent from "./components/productComponent";
 
-export const products = () => {
-  const generateEmptyProducts = () => {
-    let content = [];
-    for (let i = 0; i < 22; i++) {
-      content.push(
-        <ProductComponent
-          key={i}
-          id={i}
-          title="Velo X-FREEZE"
-          description="Lahodný puk je doopravdy tak dobrý že se z něj ihned uděláte"
-          image="/puk.png"
-        ></ProductComponent>
-      );
+export const Products = () => {
+  const { data, loading, error } = useProductsQuery({ skip: false });
+
+  const generateEmptyProducts = (data: any) => {
+    if (error) {
+      return <Alert severity="error">{error.message}</Alert>;
     }
-    return content;
+    if (!loading) {
+      return data.product.map((el: any) => (
+        <ProductComponent
+          key={el.id}
+          id={el.id}
+          title={el.name}
+          description={el.description}
+          image={el.image}
+        ></ProductComponent>
+      ));
+    } else {
+      return <p>Loading products...</p>;
+    }
   };
   return (
     <>
@@ -55,7 +61,7 @@ export const products = () => {
               gap: "1rem",
             }}
           >
-            {generateEmptyProducts()}
+            {generateEmptyProducts(data)}
           </Box>
         </Box>
       </Box>
@@ -63,4 +69,4 @@ export const products = () => {
   );
 };
 
-export default products;
+export default Products;

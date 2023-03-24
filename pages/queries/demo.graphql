@@ -1,16 +1,12 @@
-query people {
-  users {
+query Products {
+  product {
+    id
     name
-  }
-  githubUsers {
-    id
-    login
-    avatarUrl
-  }
-  kraba {
-    id
-    pocetKusu
-    sila
+    description
+    price
+    vat
+    vars
+    image
   }
 }
 #query documents ($typeFilter: [DocumentType!]) {

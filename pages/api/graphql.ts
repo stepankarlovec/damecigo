@@ -1,46 +1,52 @@
 import { createYoga, createSchema } from "graphql-yoga";
 import { gql } from "graphql-tag";
 import axios from "axios";
+import { verifyToken } from "@/server/verifyToken";
+import { DecodedIdToken } from "firebase-admin/lib/auth/token-verifier";
+import { adminAuth, adminFirestore } from "@/server/firebase-admin-config";
+
+type Context = {
+  user?: DecodedIdToken | undefined;
+};
 
 const typeDefs = gql`
   type Query {
-    users: [User!]!
-    githubUsers: [GithubUser!]!
-    kraba: [Kraba!]
+    product: [Product]
   }
-  type User {
+  type Product {
+    id: ID
     name: String
-  }
-  type GithubUser {
-    id: ID!
-    login: String!
-    avatarUrl: String!
-  }
-  type Kraba {
-    id: ID!
-    pocetKusu: Int!
-    sila: Int
+    description: String
+    price: Int
+    vat: Int
+    vars: String
+    image: String
   }
 `;
 
 const resolvers = {
   Query: {
-    kraba: () => {
-      return [{ id: 1, pocetKusu: 5, sila: 6 }];
+    /*
+    product: (root_, args_, context: Context) => {
+      return [
+        {
+          id: 1,
+          name: "ahoj",
+          description: "swag",
+          price: 1000,
+          vat: 21,
+          vars: "",
+          image: "swag",
+        },
+      ];
     },
-    users: () => {
-      return [{ name: "Nejsi swagger" }];
-    },
-    githubUsers: async () => {
+    */
+    async product() {
       try {
-        const users = await axios.get("https://api.github.com/users");
-        return users.data.map(({ id, login, avatar_url: avatarUrl }) => ({
-          id,
-          login,
-          avatarUrl,
-        }));
+        const products = await adminFirestore.collection("products").get();
+        return products.docs.map((prod) => prod.data());
       } catch (error) {
-        throw error;
+        console.error(error);
       }
     },
   },
@@ -62,4 +68,10 @@ export default createYoga({
   schema,
   // Needed to be defined explicitly because our endpoint lives at a different path other than `/graphql`
   graphqlEndpoint: "/api/graphql",
+  context: async (context) => {
+    const auth = context.request.headers.get("authoriation");
+    return {
+      user: auth ? await verifyToken(auth) : undefined,
+    };
+  },
 });

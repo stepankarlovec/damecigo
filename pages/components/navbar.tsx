@@ -5,12 +5,26 @@ import {
   Hidden,
   IconButton,
   Link as MuiLink,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import Image from "next/image";
 import React, { FC } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useAuthContext } from "@/context/auth-context-provider";
 
 export const Navbar: FC = () => {
+  let user = useAuthContext().user;
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <>
       <AppBar position="static">
@@ -57,7 +71,47 @@ export const Navbar: FC = () => {
             <MuiLink href="#">Kontakt</MuiLink>
           </Box>
           <Box>
-            <Button variant="contained">Příhlásit se</Button>
+            {!user ? (
+              <Button variant="contained">
+                <MuiLink href="/login" sx={{ color: "white" }}>
+                  Příhlásit se
+                </MuiLink>
+              </Button>
+            ) : (
+              <>
+                <Button
+                  id="demo-positioned-button"
+                  aria-controls={open ? "demo-positioned-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                  sx={{ color: "white" }}
+                >
+                  {user.email}
+                </Button>
+                <Menu
+                  id="demo-positioned-menu"
+                  aria-labelledby="demo-positioned-button"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                >
+                  <MenuItem onClick={handleClose}>Můj účet</MenuItem>
+                  <MenuItem onClick={handleClose}>Nastavení</MenuItem>
+                  <MenuItem onClick={() => user.signOut()}>
+                    Odhlásit se
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
           </Box>
         </Box>
       </AppBar>
