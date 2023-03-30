@@ -21,7 +21,7 @@ export default function EnterAddress() {
         onChange={({ target: { value } }) => {
           setAddressValue(value);
         }}
-        sx={{ width: "700px" }}
+        sx={{ width: ["55%", "70%", "70%"] }}
       />
       <Button variant="contained">Doručit</Button>
     </Box>

@@ -58,17 +58,19 @@ export default function MainMenu() {
               gap: "0.8rem",
             }}
           >
-            <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <Box sx={{ display: "flex", flexDirection: "row", width: "100%" }}>
               <Box
                 sx={{
                   marginX: "1rem",
                   display: "flex",
+                  flexDirection: ["column", "row"],
                   justifyItems: "center",
-                  justifyContent: "space-around",
+                  justifyContent: ["center", "space-around"],
                   border: "1px solid red",
-                  width: "630px",
+                  width: ["350px", "630px"],
                   height: "100%",
                   borderRadius: "3%",
+                  padding: "8px",
                   backgroundColor: "#ce0022",
                   color: "white",
                   boxShadow: "4px 4px 10px grey",
@@ -103,8 +105,9 @@ export default function MainMenu() {
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "row",
-                justifyContent: "left",
+                flexDirection: ["column", "row"],
+                justifyContent: ["center", "left"],
+                gap: ["1rem", "0"],
               }}
             >
               {/* DOWN */}
@@ -119,7 +122,7 @@ export default function MainMenu() {
                     justifyContent: "center",
                     textAlign: "left",
                     border: "1px solid red",
-                    width: "300px",
+                    width: ["350px", "300px"],
                     height: "205px",
                     borderRadius: "3%",
                     backgroundColor: "#ce0022",
@@ -147,7 +150,7 @@ export default function MainMenu() {
                     justifyContent: "center",
                     textAlign: "left",
                     border: "1px solid red",
-                    width: "300px",
+                    width: ["350px", "300px"],
                     height: "205px",
                     borderRadius: "3%",
                     backgroundColor: "#ce0022",
