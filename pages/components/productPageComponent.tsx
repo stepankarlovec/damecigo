@@ -13,7 +13,13 @@ import Image from "next/image";
 import React from "react";
 import Counter from "./counter";
 
-export const ProductPageComponent = () => {
+type ProductPage = {
+  name: string;
+  description: string;
+  image: string;
+};
+
+export const ProductPageComponent = (props: ProductPage) => {
   const productLink = "/product/" + 0;
   return (
     <>
@@ -32,7 +38,7 @@ export const ProductPageComponent = () => {
             padding: "8px",
           }}
         >
-          <Image src="/puk.png" alt="asd" width="450" height="350" />
+          <Image src={props.image} alt="asd" width="450" height="350" />
 
           <Box
             sx={{
@@ -44,13 +50,9 @@ export const ProductPageComponent = () => {
               padding: "16px",
             }}
           >
-            <Typography variant="h3">Test product</Typography>
+            <Typography variant="h3">{props.name}</Typography>
             <Typography variant="body1" color="text.secondary" marginTop="1rem">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Integer
-              imperdiet lectus quis justo. Maecenas aliquet accumsan leo.
-              Phasellus rhoncus. Sed convallis magna eu sem. Aliquam erat
-              volutpat. Ut enim ad minim veniam, quis nostrud exercitation
-              ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              {props.description}
             </Typography>
             <Counter></Counter>
             <Button variant="contained">Vložit do košíku</Button>

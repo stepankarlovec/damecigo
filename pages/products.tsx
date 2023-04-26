@@ -1,6 +1,7 @@
 import { useProductsQuery } from "@/generated/graphql";
 import { Alert, Box } from "@mui/material";
 import Head from "next/head";
+import { Loader } from "./components/loader";
 import Navbar from "./components/navbar";
 import ProductComponent from "./components/productComponent";
 
@@ -12,7 +13,8 @@ export const Products = () => {
       return <Alert severity="error">{error.message}</Alert>;
     }
     if (!loading) {
-      return data.product.map((el: any) => (
+      console.log(data);
+      return data.products.map((el: any) => (
         <ProductComponent
           key={el.id}
           id={el.id}
@@ -22,7 +24,7 @@ export const Products = () => {
         ></ProductComponent>
       ));
     } else {
-      return <p>Loading products...</p>;
+      return <Loader></Loader>;
     }
   };
   return (

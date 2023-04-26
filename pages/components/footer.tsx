@@ -18,7 +18,7 @@ const Footer = () => {
         <Box>
           <Typography>
             Created with &hearts; by{" "}
-            <a href="#" style={{ color: "red" }}>
+            <a href="https://stepankarlovec.cz/" style={{ color: "red" }}>
               Stepan Karlovec
             </a>
           </Typography>

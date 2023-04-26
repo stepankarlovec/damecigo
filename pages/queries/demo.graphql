@@ -1,5 +1,5 @@
 query Products {
-  product {
+  products {
     id
     name
     description
@@ -8,6 +8,20 @@ query Products {
     vars
     image
   }
+}
+query SingleProduct($MyId: Int) {
+  singleProduct(MyId: $MyId) {
+    id
+    name
+    description
+    price
+    vat
+    vars
+    image
+  }
+}
+query AddProduct {
+  addProduct(input: Product): Product
 }
 #query documents ($typeFilter: [DocumentType!]) {
 #  documents(typeFilter: $typeFilter) {

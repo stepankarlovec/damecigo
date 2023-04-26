@@ -1,13 +1,37 @@
-import { Box } from "@mui/material";
+import { Alert, Box } from "@mui/material";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Navbar from "../components/navbar";
 import ProductPageComponent from "../components/productPageComponent";
 import { useQuery, gql } from "@apollo/client";
+import { Loader } from "../components/loader";
+import { useSingleProductQuery } from "@/generated/graphql";
 
 const Product: NextPage = () => {
   const { query } = useRouter();
+  const { data, loading, error } = useSingleProductQuery({ skip: false });
+
+  const generateProductComponent = (data: any) => {
+    if (error) {
+      return <Alert severity="error">{error.message}</Alert>;
+    }
+    if (!loading) {
+      console.log(data);
+      return (
+        <>
+          <ProductPageComponent
+            key={data.singleProduct.id}
+            name={data.singleProduct.name}
+            description={data.singleProduct.description}
+            image={data.singleProduct.image}
+          ></ProductPageComponent>
+        </>
+      );
+    } else {
+      return <Loader></Loader>;
+    }
+  };
 
   return (
     <>
@@ -46,7 +70,7 @@ const Product: NextPage = () => {
             }}
           ></Box>
         </Box>
-        <ProductPageComponent></ProductPageComponent>
+        {generateProductComponent(data)}
       </Box>
     </>
   );

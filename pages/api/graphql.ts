@@ -4,6 +4,7 @@ import axios from "axios";
 import { verifyToken } from "@/server/verifyToken";
 import { DecodedIdToken } from "firebase-admin/lib/auth/token-verifier";
 import { adminAuth, adminFirestore } from "@/server/firebase-admin-config";
+import { log } from "console";
 
 type Context = {
   user?: DecodedIdToken | undefined;
@@ -11,8 +12,11 @@ type Context = {
 
 const typeDefs = gql`
   type Query {
-    product: [Product]
+    products: [Product]
+    singleProduct(MyId: Int): Product
+    addProduct(Data: Product): [Product]
   }
+
   type Product {
     id: ID
     name: String
@@ -26,28 +30,31 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    /*
-    product: (root_, args_, context: Context) => {
-      return [
-        {
-          id: 1,
-          name: "ahoj",
-          description: "swag",
-          price: 1000,
-          vat: 21,
-          vars: "",
-          image: "swag",
-        },
-      ];
-    },
-    */
-    async product() {
+    async products() {
       try {
         const products = await adminFirestore.collection("products").get();
         return products.docs.map((prod) => prod.data());
       } catch (error) {
         console.error(error);
       }
+    },
+
+    async singleProduct(args: any) {
+      try {
+        const products = await adminFirestore
+          .collection("products")
+          .where("ID", "==", args)
+          .get();
+        return products.docs.map((prod) => prod.data());
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    addProduct: async (_: any, { input }: any) => {
+      const { title, content } = input;
+      const newProdRef = await adminFirestore
+        .collection("products")
+        .add({ title: title, content: content });
     },
   },
 };
